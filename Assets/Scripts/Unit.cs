@@ -5,18 +5,31 @@ using UnityEngine;
 public class Unit : MonoBehaviour
 {
     
-    [SerializeField] private string name;
-    [SerializeField] private int maxHealth;
-    [SerializeField] private int currentHealth;
+    public string unitName;
+    public int maxHealth;
+    public int currentHealth;
+    public int maxStamina;
+    public int currentStamina;
 
-
-    void Start()
+    public bool TakeDamage(int dmg)
     {
-            
+        currentHealth -= dmg;
+
+        if (currentHealth <= 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
-    void Update()
+    public void BaseAttackDamage()
     {
-        
+
     }
+
+
+
 }
