@@ -12,4 +12,5 @@ public class PlayerBattleHUD : BattleHUD
     {
         stamina.fillAmount = unit.currentStamina;
     }
+
 }

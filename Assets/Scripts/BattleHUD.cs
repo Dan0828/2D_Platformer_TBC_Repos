@@ -15,4 +15,5 @@ public class BattleHUD : MonoBehaviour
         float hpFill = unit.currentHealth / unit.maxHealth;
         hp.fillAmount = hpFill;
     }
+
 }

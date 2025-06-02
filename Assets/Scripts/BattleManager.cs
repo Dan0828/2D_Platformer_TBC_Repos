@@ -17,13 +17,12 @@ public class BattleManager : MonoBehaviour
 
     Unit player;
     Unit boss;
+    int baseAtkDmg;
 
     public TextMeshProUGUI dialogueText;
 
     public PlayerBattleHUD playerHUD;
     public BossBattleHUD bossHUD;
-
-    public HealthBar playerHealthBar; 
 
     void Start()
     {
@@ -35,6 +34,7 @@ public class BattleManager : MonoBehaviour
 
     IEnumerator Setup()
     {
+
         player = playerRb.GetComponent<Unit>();
         boss = bossRb.GetComponent<Unit>();
         dialogueText.text = "You are challenged by the " + boss.unitName + " to a battle.";
@@ -57,12 +57,40 @@ public class BattleManager : MonoBehaviour
     {
         //Damage the enemy
 
-        bool isDead = boss.TakeDamage(player.damage);
+        baseAtkDmg = Random.Range(4, 9);
+
+        bool isDead = boss.TakeDamage(baseAtkDmg);
+        dialogueText.text = "Your attack successfully did " + baseAtkDmg + " damage.";
         yield return new WaitForSeconds(2f);
 
-        //check if the enemy is dead
-        //change state based on enemy status
+        if (isDead)
+        {
+            state = BattleState.WIN;
+            EndBattle();
+        }
+        else
+        {
+            state = BattleState.ENEMYTURN;
+            StartCoroutine(EnemyTurn());
+        }
 
+    }
+
+    IEnumerator EnemyTurn()
+    {
+        //dialogueText.text = boss.unitName;
+    }
+
+    void EndBattle()
+    {
+        if (state == BattleState.WIN)
+        {
+            dialogueText.text = "You defeated the " + boss.unitName + ".";
+        }
+        else if (state == BattleState.LOSE)
+        {
+            dialogueText.text = "You were defeated by the " + boss.unitName + ".";
+        }
     }
 
     void PlayerTurn()
