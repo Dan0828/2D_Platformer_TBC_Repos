@@ -31,13 +31,14 @@ public class Unit : MonoBehaviour
 
     public void StaminaUsage(int staminaUse)
     {
-        currentStamina -= staminaUse;
+        currentStamina =currentStamina- staminaUse;
         staminaBar.SetStamina(currentStamina);
     }
 
     public void StaminaRefresh()
     {
         currentStamina += 5;
+        staminaBar.SetStamina(currentStamina);
     }
 
 }
