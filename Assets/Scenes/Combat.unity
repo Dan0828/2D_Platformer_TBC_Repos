@@ -1301,7 +1301,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nameText: {fileID: 1173753225}
-  hp: {fileID: 397030722}
 --- !u!1 &671223857
 GameObject:
   m_ObjectHideFlags: 0
@@ -1576,8 +1575,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nameText: {fileID: 1826107964}
-  hp: {fileID: 1133199018}
-  stamina: {fileID: 1858403404}
 --- !u!1 &758399012
 GameObject:
   m_ObjectHideFlags: 0
@@ -1857,8 +1854,8 @@ MonoBehaviour:
   unitName: Player
   maxHealth: 100
   currentHealth: 100
-  maxStamina: 0
-  currentStamina: 0
+  maxStamina: 50
+  currentStamina: 50
   healthBar: {fileID: 1462001447}
   staminaBar: {fileID: 1838796226}
 --- !u!1 &926169104
@@ -4566,7 +4563,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 344fab140036a9747968529a2a41de94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slider: {fileID: 0}
+  slider: {fileID: 1838796225}
 --- !u!114 &1838796227
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4828,7 +4825,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -260.30014, y: 406.9999}
+  m_AnchoredPosition: {x: -246.3, y: 421.1}
   m_SizeDelta: {x: 500, y: 500}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1862206008

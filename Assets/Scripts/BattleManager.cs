@@ -20,6 +20,9 @@ public class BattleManager : MonoBehaviour
     int playerDamage;
     int bossAttack;
     int bossDamage;
+    int staminaUse;
+    bool attacking;
+    bool staminaCheck;
 
     public TextMeshProUGUI dialogueText;
 
@@ -29,7 +32,7 @@ public class BattleManager : MonoBehaviour
     void Start()
     {
         state = BattleState.START;
-
+        attacking = false;
         /*calls the function but "StartCoroutine" is required when adding a yield*/
         StartCoroutine(Setup());
     }
@@ -47,16 +50,19 @@ public class BattleManager : MonoBehaviour
         /*Waits for 2 seconds before changing the state of the game, and changing the dialogue text.*/
         yield return new WaitForSeconds(2f);
 
-        state = BattleState.PLAYERTURN;
         dialogueText.text = "Player's turn to attack.";
 
         yield return new WaitForSeconds(2f);
+
+        state = BattleState.PLAYERTURN;
         PlayerTurn();
     }
 
     IEnumerator PlayerBaseAttack()
     {
         //Damage the enemy
+
+        attacking = true;
 
         playerDamage = Random.Range(4, 9);
 
@@ -79,23 +85,46 @@ public class BattleManager : MonoBehaviour
 
     IEnumerator PlayerCrescentSlash()
     {
-        //Damage the enemy
-
-        playerDamage = Random.Range(8, 13);
-
-        bool isDead = boss.TakeDamage(playerDamage);
-        dialogueText.text = "Your attack successfully dealt " + playerDamage + " damage.";
-        yield return new WaitForSeconds(2f);
-
-        if (isDead)
+        staminaCheck = true;
+        while (staminaCheck)
         {
-            state = BattleState.WIN;
-            EndBattle();
-        }
-        else
-        {
-            state = BattleState.ENEMYTURN;
-            StartCoroutine(EnemyTurn());
+            //Damage the enemy
+
+            staminaUse = 10;
+
+            if (player.currentStamina - staminaUse < 0)
+            {
+                dialogueText.text = "You do not have the energy to perform this attack.";
+                yield return new WaitForSeconds(1f);
+                PlayerTurn();
+                staminaCheck = false;
+                attacking = false;
+                break;
+            }
+
+            attacking = true;
+
+            playerDamage = Random.Range(8, 13);
+
+
+            player.StaminaUsage(staminaUse);
+
+            bool isDead = boss.TakeDamage(playerDamage);
+            dialogueText.text = "Your attack successfully dealt " + playerDamage + " damage.";
+            yield return new WaitForSeconds(2f);
+
+            if (isDead)
+            {
+                staminaCheck = false;
+                state = BattleState.WIN;
+                EndBattle();
+            }
+            else
+            {
+                staminaCheck = false;
+                state = BattleState.ENEMYTURN;
+                StartCoroutine(EnemyTurn());
+            }
         }
 
     }
@@ -104,7 +133,12 @@ public class BattleManager : MonoBehaviour
     {
         //Damage the enemy
 
-        playerDamage = Random.Range(6, 13);
+        attacking = true;
+
+        playerDamage = Random.Range(6, 17);
+
+        staminaUse = 20;
+        player.StaminaUsage(staminaUse);
 
         bool isDead = boss.TakeDamage(playerDamage);
         dialogueText.text = "Hit #1 successfully dealt " + playerDamage + " damage.";
@@ -117,7 +151,7 @@ public class BattleManager : MonoBehaviour
         }
         else
         {
-            playerDamage = Random.Range(6, 13);
+            playerDamage = Random.Range(6, 17);
 
             isDead = boss.TakeDamage(playerDamage);
             dialogueText.text = "Hit #2 successfully dealt " + playerDamage + " damage.";
@@ -142,7 +176,12 @@ public class BattleManager : MonoBehaviour
     {
         //Damage the enemy
 
+        attacking = true;
+
         playerDamage = Random.Range(18, 27);
+
+        staminaUse = 30;
+        player.StaminaUsage(staminaUse);
 
         bool isDead = boss.TakeDamage(playerDamage);
         dialogueText.text = "Your attack successfully dealt " + playerDamage + " damage.";
@@ -206,6 +245,8 @@ public class BattleManager : MonoBehaviour
         dialogueText.text = "The attack dealt " + bossDamage + " damage.";
 
         yield return new WaitForSeconds(1f);
+
+        attacking = false;
         
 
         if(isDead)
@@ -218,6 +259,7 @@ public class BattleManager : MonoBehaviour
         {
             state = BattleState.PLAYERTURN;
             PlayerTurn();
+            player.StaminaRefresh();
         }
 
         
@@ -237,42 +279,37 @@ public class BattleManager : MonoBehaviour
 
     public void OnBaseAttackButton()
     {
-        if (state != BattleState.PLAYERTURN)
+        if (state == BattleState.PLAYERTURN && !attacking)
         {
-            return;
+            StartCoroutine(PlayerBaseAttack());
         }
 
-        StartCoroutine(PlayerBaseAttack());
     }
 
     public void OnCrescentSlashButton()
     {
-        if (state != BattleState.PLAYERTURN)
+        if (state == BattleState.PLAYERTURN && !attacking)
         {
-            return;
+            StartCoroutine(PlayerCrescentSlash());
         }
-
-        StartCoroutine(PlayerCrescentSlash());
     }
 
     public void OnTwinStrikeButton()
     {
-        if (state != BattleState.PLAYERTURN)
+        if (state == BattleState.PLAYERTURN && !attacking)
         {
-            return;
+            StartCoroutine(PlayerTwinStrike());
         }
 
-        StartCoroutine(PlayerTwinStrike());
     }
 
     public void OnShatterfallButton()
     {
-        if (state != BattleState.PLAYERTURN)
+        if (state == BattleState.PLAYERTURN && !attacking)
         {
-            return;
+            StartCoroutine(PlayerShatterfall());
         }
-
-        StartCoroutine(PlayerShatterfall());
+        
     }
     void PlayerTurn()
     {
