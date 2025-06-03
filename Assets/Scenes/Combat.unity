@@ -2103,8 +2103,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unitName: Player
-  maxHealth: 75
-  currentHealth: 75
+  maxHealth: 100
+  currentHealth: 100
   maxStamina: 0
   currentStamina: 0
   healthBar: {fileID: 1462001447}
@@ -3513,9 +3513,9 @@ MonoBehaviour:
   m_HandleRect: {fileID: 0}
   m_Direction: 0
   m_MinValue: 0
-  m_MaxValue: 75
+  m_MaxValue: 100
   m_WholeNumbers: 1
-  m_Value: 75
+  m_Value: 100
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -3820,9 +3820,9 @@ MonoBehaviour:
   m_HandleRect: {fileID: 0}
   m_Direction: 0
   m_MinValue: 0
-  m_MaxValue: 75
-  m_WholeNumbers: 0
-  m_Value: 75
+  m_MaxValue: 100
+  m_WholeNumbers: 1
+  m_Value: 100
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -3931,8 +3931,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unitName: Fallen Paladin
-  maxHealth: 75
-  currentHealth: 75
+  maxHealth: 100
+  currentHealth: 100
   maxStamina: 0
   currentStamina: 0
   healthBar: {fileID: 1657116681}
