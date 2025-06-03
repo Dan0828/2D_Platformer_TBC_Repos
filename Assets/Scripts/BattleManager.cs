@@ -17,7 +17,7 @@ public class BattleManager : MonoBehaviour
 
     Unit player;
     Unit boss;
-    int baseAtkDmg;
+    int playerDamage;
     int bossAttack;
     int bossDamage;
 
@@ -42,7 +42,6 @@ public class BattleManager : MonoBehaviour
         dialogueText.text = "You are challenged by the " + boss.unitName + " to a battle.";
 
         playerHUD.SetHUD(player);
-        playerHUD.SetStamina(player);
         bossHUD.SetHUD(boss);
 
         /*Waits for 2 seconds before changing the state of the game, and changing the dialogue text.*/
@@ -59,10 +58,10 @@ public class BattleManager : MonoBehaviour
     {
         //Damage the enemy
 
-        baseAtkDmg = Random.Range(4, 9);
+        playerDamage = Random.Range(4, 9);
 
-        bool isDead = boss.TakeDamage(baseAtkDmg);
-        dialogueText.text = "Your attack successfully did " + baseAtkDmg + " damage.";
+        bool isDead = boss.TakeDamage(playerDamage);
+        dialogueText.text = "Your attack successfully dealt " + playerDamage + " damage.";
         yield return new WaitForSeconds(2f);
 
         if (isDead)
@@ -78,70 +77,135 @@ public class BattleManager : MonoBehaviour
 
     }
 
+    IEnumerator PlayerCrescentSlash()
+    {
+        //Damage the enemy
 
+        playerDamage = Random.Range(8, 13);
+
+        bool isDead = boss.TakeDamage(playerDamage);
+        dialogueText.text = "Your attack successfully dealt " + playerDamage + " damage.";
+        yield return new WaitForSeconds(2f);
+
+        if (isDead)
+        {
+            state = BattleState.WIN;
+            EndBattle();
+        }
+        else
+        {
+            state = BattleState.ENEMYTURN;
+            StartCoroutine(EnemyTurn());
+        }
+
+    }
+
+    IEnumerator PlayerTwinStrike()
+    {
+        //Damage the enemy
+
+        playerDamage = Random.Range(6, 13);
+
+        bool isDead = boss.TakeDamage(playerDamage);
+        dialogueText.text = "Hit #1 successfully dealt " + playerDamage + " damage.";
+        yield return new WaitForSeconds(2f);
+
+        if (isDead)
+        {
+            state = BattleState.WIN;
+            EndBattle();
+        }
+        else
+        {
+            playerDamage = Random.Range(6, 13);
+
+            isDead = boss.TakeDamage(playerDamage);
+            dialogueText.text = "Hit #2 successfully dealt " + playerDamage + " damage.";
+            yield return new WaitForSeconds(2f);
+
+
+            if (isDead)
+            {
+                state = BattleState.WIN;
+                EndBattle();
+            }
+            else
+            {
+                state = BattleState.ENEMYTURN;
+                StartCoroutine(EnemyTurn());
+            }
+        }
+
+    }
+
+    IEnumerator PlayerShatterfall()
+    {
+        //Damage the enemy
+
+        playerDamage = Random.Range(18, 27);
+
+        bool isDead = boss.TakeDamage(playerDamage);
+        dialogueText.text = "Your attack successfully dealt " + playerDamage + " damage.";
+        yield return new WaitForSeconds(2f);
+
+        if (isDead)
+        {
+            state = BattleState.WIN;
+            EndBattle();
+        }
+        else
+        {
+            state = BattleState.ENEMYTURN;
+            StartCoroutine(EnemyTurn());
+        }
+
+    }
 
     IEnumerator EnemyTurn()
     {
-        yield return new WaitForSeconds(1f);
-
          bossAttack = Random.Range(1, 101);
 
-         if (bossAttack <= 50)
-         {
-            
+         if (bossAttack <= 60)
+         {            
              bossDamage = Random.Range(5, 8);
 
              dialogueText.text = boss.unitName + " uses Slash.";
 
-             yield return new WaitForSeconds(1f);
-
-             dialogueText.text = boss.unitName + " dealt " + bossDamage + " damage.";
-             
+             yield return new WaitForSeconds(2f);
          }
           
-         else if (bossAttack <= 75 && bossAttack > 50)
-         {
-            
+         else if (bossAttack > 60 && bossAttack <= 85)
+         {         
              bossDamage = Random.Range(11, 14);
 
              dialogueText.text = boss.unitName + " uses Night Daze.";
 
-             yield return new WaitForSeconds(1f);
-
-             dialogueText.text = boss.unitName + " dealt " + bossDamage + " damage.";
+             yield return new WaitForSeconds(2f);
          }
           
-         else if (bossAttack > 75  && bossAttack <= 90 )
-         {
-            
+         else if (bossAttack > 85  && bossAttack <= 95 )
+         {  
              bossDamage = Random.Range(17, 21);
 
-             dialogueText.text = boss.unitName + "  uses Black Hole Eclipse.";
+             dialogueText.text = boss.unitName + " uses Black Hole Eclipse.";
 
-             yield return new WaitForSeconds(1f);
-
-             dialogueText.text = boss.unitName + " dealt " + bossDamage + " damage.";
-
+             yield return new WaitForSeconds(2f);
          }
           
-         else if (bossAttack > 90)
-         {
-            
-             bossDamage = Random.Range(22, 26);
+         else if (bossAttack > 95)
+         {          
+             bossDamage = Random.Range(28, 32);
 
-             dialogueText.text = boss.unitName + "  uses Wrath of the Void.";
+             dialogueText.text = boss.unitName + " uses Wrath of the Void.";
 
-             yield return new WaitForSeconds(1f);
-
-             dialogueText.text = boss.unitName + " dealt " + bossDamage + " damage.";
-
+             yield return new WaitForSeconds(2f);
          }
-        
-
-        yield return new WaitForSeconds(1f);
 
         bool isDead = player.TakeDamage(bossDamage);
 
+        dialogueText.text = "The attack dealt " + bossDamage + " damage.";
+
+        yield return new WaitForSeconds(1f);
         
 
         if(isDead)
@@ -171,7 +235,7 @@ public class BattleManager : MonoBehaviour
         }
     }
 
-       public void OnBaseAttackButton()
+    public void OnBaseAttackButton()
     {
         if (state != BattleState.PLAYERTURN)
         {
@@ -181,6 +245,35 @@ public class BattleManager : MonoBehaviour
         StartCoroutine(PlayerBaseAttack());
     }
 
+    public void OnCrescentSlashButton()
+    {
+        if (state != BattleState.PLAYERTURN)
+        {
+            return;
+        }
+
+        StartCoroutine(PlayerCrescentSlash());
+    }
+
+    public void OnTwinStrikeButton()
+    {
+        if (state != BattleState.PLAYERTURN)
+        {
+            return;
+        }
+
+        StartCoroutine(PlayerTwinStrike());
+    }
+
+    public void OnShatterfallButton()
+    {
+        if (state != BattleState.PLAYERTURN)
+        {
+            return;
+        }
+
+        StartCoroutine(PlayerShatterfall());
+    }
     void PlayerTurn()
     {
         dialogueText.text = "Choose your move...";

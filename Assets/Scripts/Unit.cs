@@ -12,13 +12,7 @@ public class Unit : MonoBehaviour
     public int currentStamina;
 
     public HealthBar healthBar;
-
-
-    /*public void StartHealth()
-    {
-        currentHealth = maxHealth;
-        healthBar.SetMaxHealth(maxHealth);
-    }*/
+    public StaminaBar staminaBar;
 
     public bool TakeDamage(int dmg)
     {
@@ -33,6 +27,17 @@ public class Unit : MonoBehaviour
         {
             return false;
         }
+    }
+
+    public void StaminaUsage(int staminaUse)
+    {
+        currentStamina -= staminaUse;
+        staminaBar.SetStamina(currentStamina);
+    }
+
+    public void StaminaRefresh()
+    {
+        currentStamina += 5;
     }
 
 }

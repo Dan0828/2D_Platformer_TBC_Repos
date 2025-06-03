@@ -6,11 +6,5 @@ using TMPro;
 
 public class PlayerBattleHUD : BattleHUD
 {
-    public Image stamina;
-
-    public void SetStamina(Unit unit)
-    {
-        stamina.fillAmount = unit.currentStamina;
-    }
 
 }
