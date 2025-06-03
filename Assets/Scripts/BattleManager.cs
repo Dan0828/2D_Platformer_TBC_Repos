@@ -18,6 +18,8 @@ public class BattleManager : MonoBehaviour
     Unit player;
     Unit boss;
     int baseAtkDmg;
+    int bossAttack;
+    int bossDamage;
 
     public TextMeshProUGUI dialogueText;
 
@@ -76,9 +78,85 @@ public class BattleManager : MonoBehaviour
 
     }
 
+
+
     IEnumerator EnemyTurn()
     {
-        //dialogueText.text = boss.unitName;
+        yield return new WaitForSeconds(1f);
+
+         bossAttack = Random.Range(1, 101);
+
+         if (bossAttack <= 50)
+         {
+            
+             bossDamage = Random.Range(5, 8);
+
+             dialogueText.text = boss.unitName + " uses Slash.";
+
+             yield return new WaitForSeconds(1f);
+
+             dialogueText.text = boss.unitName + " dealt " + bossDamage + " damage.";
+             
+         }
+          
+         else if (bossAttack <= 75 && bossAttack > 50)
+         {
+            
+             bossDamage = Random.Range(11, 14);
+
+             dialogueText.text = boss.unitName + " uses Night Daze.";
+
+             yield return new WaitForSeconds(1f);
+
+             dialogueText.text = boss.unitName + " dealt " + bossDamage + " damage.";
+         }
+          
+         else if (bossAttack > 75  && bossAttack <= 90 )
+         {
+            
+             bossDamage = Random.Range(17, 21);
+
+             dialogueText.text = boss.unitName + "  uses Black Hole Eclipse.";
+
+             yield return new WaitForSeconds(1f);
+
+             dialogueText.text = boss.unitName + " dealt " + bossDamage + " damage.";
+
+         }
+          
+         else if (bossAttack > 90)
+         {
+            
+             bossDamage = Random.Range(22, 26);
+
+             dialogueText.text = boss.unitName + "  uses Wrath of the Void.";
+
+             yield return new WaitForSeconds(1f);
+
+             dialogueText.text = boss.unitName + " dealt " + bossDamage + " damage.";
+
+         }
+        
+
+        yield return new WaitForSeconds(1f);
+
+        bool isDead = player.TakeDamage(bossDamage);
+
+        
+
+        if(isDead)
+        {
+            state = BattleState.LOSE;
+            EndBattle();
+
+        }
+        else
+        {
+            state = BattleState.PLAYERTURN;
+            PlayerTurn();
+        }
+
+        
     }
 
     void EndBattle()
@@ -93,12 +171,7 @@ public class BattleManager : MonoBehaviour
         }
     }
 
-    void PlayerTurn()
-    {
-        dialogueText.text = "Choose your move...";
-    }
-
-    public void OnBaseAttackButton()
+       public void OnBaseAttackButton()
     {
         if (state != BattleState.PLAYERTURN)
         {
@@ -107,5 +180,12 @@ public class BattleManager : MonoBehaviour
 
         StartCoroutine(PlayerBaseAttack());
     }
+
+    void PlayerTurn()
+    {
+        dialogueText.text = "Choose your move...";
+    }
+
+ 
 
 }
