@@ -25,6 +25,9 @@ public class BattleManager : MonoBehaviour
     bool isDead;
 
     public TextMeshProUGUI dialogueText;
+    public TextMeshProUGUI playerHealthText;
+    public TextMeshProUGUI bossHealthText;
+    public TextMeshProUGUI staminaText;
 
     public PlayerBattleHUD playerHUD;
     public BossBattleHUD bossHUD;
@@ -33,15 +36,21 @@ public class BattleManager : MonoBehaviour
     {
         state = BattleState.START;
         attacking = false;
+
         /*calls the function but "StartCoroutine" is required when adding a yield*/
         StartCoroutine(Setup());
+
     }
 
     IEnumerator Setup()
     {
-
         player = playerRb.GetComponent<Unit>();
         boss = bossRb.GetComponent<Unit>();
+
+        staminaText.text = player.currentStamina + "/" + player.maxStamina;
+        playerHealthText.text = player.currentHealth + "/" + player.maxHealth;
+        bossHealthText.text = boss.currentHealth + "/" + boss.maxHealth;
+
         dialogueText.text = "You are challenged by the " + boss.unitName + " to a battle.";
 
         playerHUD.SetHUD(player);
@@ -67,6 +76,16 @@ public class BattleManager : MonoBehaviour
         playerDamage = Random.Range(4, 9);
 
         isDead = boss.TakeDamage(playerDamage);
+
+        if (boss.currentHealth < 0)
+        {
+            bossHealthText.text = 0 + "/" + boss.maxHealth;
+        }
+        else
+        {
+            bossHealthText.text = boss.currentHealth + "/" + boss.maxHealth;
+        }
+
         dialogueText.text = "Your attack successfully dealt " + playerDamage + " damage.";
         yield return new WaitForSeconds(2f);
 
@@ -100,12 +119,22 @@ public class BattleManager : MonoBehaviour
 
         attacking = true;
 
-        playerDamage = Random.Range(8, 13);
-
+        playerDamage = Random.Range(10, 17);
 
         player.StaminaUsage(staminaUse);
+        staminaText.text = player.currentStamina + "/" + player.maxStamina;
 
         isDead = boss.TakeDamage(playerDamage);
+
+        if (boss.currentHealth < 0)
+        {
+            bossHealthText.text = 0 + "/" + boss.maxHealth;
+        }
+        else
+        {
+            bossHealthText.text = boss.currentHealth + "/" + boss.maxHealth;
+        }
+
         dialogueText.text = "Your attack successfully dealt " + playerDamage + " damage.";
         yield return new WaitForSeconds(2f);
 
@@ -141,10 +170,20 @@ public class BattleManager : MonoBehaviour
 
         playerDamage = Random.Range(6, 17);
 
-
         player.StaminaUsage(staminaUse);
+        staminaText.text = player.currentStamina + "/" + player.maxStamina;
 
         isDead = boss.TakeDamage(playerDamage);
+
+        if (boss.currentHealth < 0)
+        {
+            bossHealthText.text = 0 + "/" + boss.maxHealth;
+        }
+        else
+        {
+            bossHealthText.text = boss.currentHealth + "/" + boss.maxHealth;
+        }
+
         dialogueText.text = "Hit #1 successfully dealt " + playerDamage + " damage.";
         yield return new WaitForSeconds(2f);
 
@@ -158,6 +197,17 @@ public class BattleManager : MonoBehaviour
             playerDamage = Random.Range(6, 17);
 
             isDead = boss.TakeDamage(playerDamage);
+
+            if (boss.currentHealth < 0)
+            {
+                bossHealthText.text = 0 + "/" + boss.maxHealth;
+            }
+            else
+            {
+                bossHealthText.text = boss.currentHealth + "/" + boss.maxHealth;
+            }
+
+            bossHealthText.text = boss.currentHealth + "/" + boss.maxHealth;
             dialogueText.text = "Hit #2 successfully dealt " + playerDamage + " damage.";
             yield return new WaitForSeconds(2f);
 
@@ -194,9 +244,22 @@ public class BattleManager : MonoBehaviour
         attacking = true;
 
         playerDamage = Random.Range(22, 31);
+
         player.StaminaUsage(staminaUse);
+        staminaText.text = player.currentStamina + "/" + player.maxStamina;
 
         isDead = boss.TakeDamage(playerDamage);
+
+        if (boss.currentHealth < 0)
+        {
+            bossHealthText.text = 0 + "/" + boss.maxHealth;
+        }
+        else
+        {
+            bossHealthText.text = boss.currentHealth + "/" + boss.maxHealth;
+        }
+
+        
         dialogueText.text = "Your attack successfully dealt " + playerDamage + " damage.";
         yield return new WaitForSeconds(2f);
 
@@ -254,9 +317,20 @@ public class BattleManager : MonoBehaviour
              dialogueText.text = boss.unitName + " uses Wrath of the Void.";
 
              yield return new WaitForSeconds(2f);
+
          }
 
+
         isDead = player.TakeDamage(bossDamage);
+
+        if (player.currentHealth < 0)
+        {
+            playerHealthText.text = 0 + "/" + player.maxHealth;
+        }
+        else
+        {
+            playerHealthText.text = player.currentHealth + "/" + player.maxHealth;
+        }
 
         dialogueText.text = "The attack dealt " + bossDamage + " damage.";
 
@@ -278,6 +352,7 @@ public class BattleManager : MonoBehaviour
             if (player.currentStamina < 50)
             {
                 player.StaminaRefresh();
+                staminaText.text = player.currentStamina + "/" + player.maxStamina;
             }
         }
 
