@@ -193,7 +193,7 @@ public class BattleManager : MonoBehaviour
 
         attacking = true;
 
-        playerDamage = Random.Range(18, 27);
+        playerDamage = Random.Range(22, 31);
         player.StaminaUsage(staminaUse);
 
         isDead = boss.TakeDamage(playerDamage);
@@ -220,34 +220,34 @@ public class BattleManager : MonoBehaviour
     {
          bossAttack = Random.Range(1, 101);
 
-         if (bossAttack <= 50)
+         if (bossAttack <= 40)
          {            
-             bossDamage = Random.Range(5, 8);
+             bossDamage = Random.Range(6, 11);
 
              dialogueText.text = boss.unitName + " uses Slash.";
 
              yield return new WaitForSeconds(2f);
          }
           
-         else if (bossAttack > 50 && bossAttack <= 75)
+         else if (bossAttack > 40 && bossAttack <= 65)
          {         
-             bossDamage = Random.Range(11, 14);
+             bossDamage = Random.Range(12, 16);
 
              dialogueText.text = boss.unitName + " uses Night Daze.";
 
              yield return new WaitForSeconds(2f);
          }
           
-         else if (bossAttack > 75  && bossAttack <= 90 )
+         else if (bossAttack > 65  && bossAttack <= 85 )
          {  
-             bossDamage = Random.Range(17, 21);
+             bossDamage = Random.Range(18, 23);
 
              dialogueText.text = boss.unitName + " uses Black Hole Eclipse.";
 
              yield return new WaitForSeconds(2f);
          }
           
-         else if (bossAttack > 90)
+         else if (bossAttack > 85)
          {          
              bossDamage = Random.Range(28, 32);
 
