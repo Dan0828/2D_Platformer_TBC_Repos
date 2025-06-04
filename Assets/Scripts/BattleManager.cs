@@ -22,7 +22,7 @@ public class BattleManager : MonoBehaviour
     int bossDamage;
     int staminaUse;
     bool attacking;
-    bool staminaCheck;
+    bool isDead;
 
     public TextMeshProUGUI dialogueText;
 
@@ -66,7 +66,7 @@ public class BattleManager : MonoBehaviour
 
         playerDamage = Random.Range(4, 9);
 
-        bool isDead = boss.TakeDamage(playerDamage);
+        isDead = boss.TakeDamage(playerDamage);
         dialogueText.text = "Your attack successfully dealt " + playerDamage + " damage.";
         yield return new WaitForSeconds(2f);
 
@@ -85,62 +85,66 @@ public class BattleManager : MonoBehaviour
 
     IEnumerator PlayerCrescentSlash()
     {
-        staminaCheck = true;
-        while (staminaCheck)
+        //Damage the enemy
+
+        staminaUse = 10;
+
+        if (player.currentStamina - staminaUse < 0)
         {
-            //Damage the enemy
-
-            staminaUse = 10;
-
-            if (player.currentStamina - staminaUse < 0)
-            {
-                dialogueText.text = "You do not have the energy to perform this attack.";
-                yield return new WaitForSeconds(1f);
-                PlayerTurn();
-                staminaCheck = false;
-                attacking = false;
-                break;
-            }
-
-            attacking = true;
-
-            playerDamage = Random.Range(8, 13);
-
-
-            player.StaminaUsage(staminaUse);
-
-            bool isDead = boss.TakeDamage(playerDamage);
-            dialogueText.text = "Your attack successfully dealt " + playerDamage + " damage.";
-            yield return new WaitForSeconds(2f);
-
-            if (isDead)
-            {
-                staminaCheck = false;
-                state = BattleState.WIN;
-                EndBattle();
-            }
-            else
-            {
-                staminaCheck = false;
-                state = BattleState.ENEMYTURN;
-                StartCoroutine(EnemyTurn());
-            }
+            dialogueText.text = "You do not have the energy to perform this attack.";
+            yield return new WaitForSeconds(1f);
+            PlayerTurn();
+            attacking = false;
+            yield break;
         }
 
+        attacking = true;
+
+        playerDamage = Random.Range(8, 13);
+
+
+        player.StaminaUsage(staminaUse);
+
+        isDead = boss.TakeDamage(playerDamage);
+        dialogueText.text = "Your attack successfully dealt " + playerDamage + " damage.";
+        yield return new WaitForSeconds(2f);
+
+        if (isDead)
+        {
+            state = BattleState.WIN;
+            EndBattle();
+        }
+        else
+        {
+            state = BattleState.ENEMYTURN;
+            StartCoroutine(EnemyTurn());
+        }
     }
+
 
     IEnumerator PlayerTwinStrike()
     {
         //Damage the enemy
 
+        staminaUse = 20;
+
+        if (player.currentStamina - staminaUse < 0)
+        {
+            dialogueText.text = "You do not have the energy to perform this attack.";
+            yield return new WaitForSeconds(1f);
+            PlayerTurn();
+            attacking = false;
+            yield break;
+        }
+
         attacking = true;
 
         playerDamage = Random.Range(6, 17);
 
-        staminaUse = 20;
+
         player.StaminaUsage(staminaUse);
 
-        bool isDead = boss.TakeDamage(playerDamage);
+        isDead = boss.TakeDamage(playerDamage);
         dialogueText.text = "Hit #1 successfully dealt " + playerDamage + " damage.";
         yield return new WaitForSeconds(2f);
 
@@ -176,14 +180,23 @@ public class BattleManager : MonoBehaviour
     {
         //Damage the enemy
 
+        staminaUse = 30;
+
+        if (player.currentStamina - staminaUse < 0)
+        {
+            dialogueText.text = "You do not have the energy to perform this attack.";
+            yield return new WaitForSeconds(1f);
+            PlayerTurn();
+            attacking = false;
+            yield break;
+        }
+
         attacking = true;
 
         playerDamage = Random.Range(18, 27);
-
-        staminaUse = 30;
         player.StaminaUsage(staminaUse);
 
-        bool isDead = boss.TakeDamage(playerDamage);
+        isDead = boss.TakeDamage(playerDamage);
         dialogueText.text = "Your attack successfully dealt " + playerDamage + " damage.";
         yield return new WaitForSeconds(2f);
 
@@ -198,13 +211,16 @@ public class BattleManager : MonoBehaviour
             StartCoroutine(EnemyTurn());
         }
 
+
+
+
     }
 
     IEnumerator EnemyTurn()
     {
          bossAttack = Random.Range(1, 101);
 
-         if (bossAttack <= 60)
+         if (bossAttack <= 50)
          {            
              bossDamage = Random.Range(5, 8);
 
@@ -213,7 +229,7 @@ public class BattleManager : MonoBehaviour
              yield return new WaitForSeconds(2f);
          }
           
-         else if (bossAttack > 60 && bossAttack <= 85)
+         else if (bossAttack > 50 && bossAttack <= 75)
          {         
              bossDamage = Random.Range(11, 14);
 
@@ -222,7 +238,7 @@ public class BattleManager : MonoBehaviour
              yield return new WaitForSeconds(2f);
          }
           
-         else if (bossAttack > 85  && bossAttack <= 95 )
+         else if (bossAttack > 75  && bossAttack <= 90 )
          {  
              bossDamage = Random.Range(17, 21);
 
@@ -231,7 +247,7 @@ public class BattleManager : MonoBehaviour
              yield return new WaitForSeconds(2f);
          }
           
-         else if (bossAttack > 95)
+         else if (bossAttack > 90)
          {          
              bossDamage = Random.Range(28, 32);
 
@@ -240,7 +256,7 @@ public class BattleManager : MonoBehaviour
              yield return new WaitForSeconds(2f);
          }
 
-        bool isDead = player.TakeDamage(bossDamage);
+        isDead = player.TakeDamage(bossDamage);
 
         dialogueText.text = "The attack dealt " + bossDamage + " damage.";
 
@@ -259,7 +275,10 @@ public class BattleManager : MonoBehaviour
         {
             state = BattleState.PLAYERTURN;
             PlayerTurn();
-            player.StaminaRefresh();
+            if (player.currentStamina < 50)
+            {
+                player.StaminaRefresh();
+            }
         }
 
         
@@ -319,3 +338,4 @@ public class BattleManager : MonoBehaviour
  
 
 }
+
