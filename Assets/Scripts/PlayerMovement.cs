@@ -7,6 +7,7 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] private float speed;
     [SerializeField] private float jumpForce;
+    private Vector2 moveDirection;
     private bool isGrounded;
 
     //below is all methods
@@ -14,23 +15,16 @@ public class PlayerMovement : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        moveDirection = Vector2.zero;
     }
 
     private void Update()
     {
-        if (Input.GetAxisRaw("Horizontal") == -1) // Left
-        {
-            rb.velocity = new Vector2(-speed, rb.velocity.y);
-        }
-        
-        if (Input.GetAxisRaw("Horizontal") == 1) // Right
-        {
-            rb.velocity = new Vector2(speed, rb.velocity.y);
-        }
+        Move();
 
         if (isGrounded && Input.GetKeyDown(KeyCode.Space) == true)
         {
-            rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+            rb.AddForce(new Vector2(rb.velocity.x, jumpForce));
         }
     }
 
@@ -40,8 +34,7 @@ public class PlayerMovement : MonoBehaviour
         {
             isGrounded = true;
         }
-
-	}
+    }
 
 	private void OnCollisionExit2D(Collision2D collision)
 	{
@@ -49,5 +42,17 @@ public class PlayerMovement : MonoBehaviour
         {
             isGrounded = false;
         }
+    }
+
+    private void Move()
+    {    
+        moveDirection.x = Input.GetAxisRaw("Horizontal");
+        rb.velocity = new Vector2(moveDirection.x * speed, rb.velocity.y);
+
+        // Flip Sprite
+        if(moveDirection.x > 0 && transform.localScale.x < 0 || moveDirection.x < 0 && transform.localScale.x > 0)
+        {
+            transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
+        }      
     }
 }
