@@ -44,6 +44,7 @@ public class BattleManager : MonoBehaviour
 
     IEnumerator Setup()
     {
+
         player = playerRb.GetComponent<Unit>();
         boss = bossRb.GetComponent<Unit>();
 
@@ -198,6 +199,8 @@ public class BattleManager : MonoBehaviour
 
             isDead = boss.TakeDamage(playerDamage);
 
+            bossHealthText.text = boss.currentHealth + "/" + boss.maxHealth;
+
             if (boss.currentHealth < 0)
             {
                 bossHealthText.text = 0 + "/" + boss.maxHealth;
@@ -207,7 +210,6 @@ public class BattleManager : MonoBehaviour
                 bossHealthText.text = boss.currentHealth + "/" + boss.maxHealth;
             }
 
-            bossHealthText.text = boss.currentHealth + "/" + boss.maxHealth;
             dialogueText.text = "Hit #2 successfully dealt " + playerDamage + " damage.";
             yield return new WaitForSeconds(2f);
 
