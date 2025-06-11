@@ -16,7 +16,7 @@ public class LegendsDisplay : MonoBehaviour
     }
     void displayLegends()
     {
-        path = Application.dataPath + "/Legends.text";
+        path = Application.dataPath + "/PreviousPlayers.text";
 
         lines = File.ReadAllLines(path);
 

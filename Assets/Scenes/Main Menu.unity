@@ -172,7 +172,7 @@ GameObject:
   m_Component:
   - component: {fileID: 145561527}
   m_Layer: 5
-  m_Name: Legends
+  m_Name: Past Players
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1039,7 +1039,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: CURSED DESCENT
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8c9c5cec786f7524d95bb13b2f576d03, type: 2}
   m_sharedMaterial: {fileID: 4160115647708746079, guid: 8c9c5cec786f7524d95bb13b2f576d03, type: 2}
@@ -1952,9 +1952,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: "- Press A to move left\n- Press D to move Right\n- Press Space to Jump\n\n\t\t
-    Game Rules:\nYou must traverse through the platforming area and avoid the spikes
-    to advance to the next stage and fight the boss, The Fallen Paladin in turn based
-    combat to Win!"
+    Game Rules:\nTraverse through the platforming area and avoid the spikes to advance
+    to the next stage and fight the boss in turn based combat."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8c9c5cec786f7524d95bb13b2f576d03, type: 2}
   m_sharedMaterial: {fileID: 4160115647708746079, guid: 8c9c5cec786f7524d95bb13b2f576d03, type: 2}
@@ -2353,8 +2352,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 640, y: 39}
-  m_SizeDelta: {x: 277.1245, y: 50}
+  m_AnchoredPosition: {x: 638.17, y: 39}
+  m_SizeDelta: {x: 529.45, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1523597113
 MonoBehaviour:
@@ -2376,7 +2375,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: LEGENDS
+  m_text: PREVIOUS PLAYERS
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8c9c5cec786f7524d95bb13b2f576d03, type: 2}
   m_sharedMaterial: {fileID: 4160115647708746079, guid: 8c9c5cec786f7524d95bb13b2f576d03, type: 2}

@@ -26,6 +26,7 @@ public class BattleManager : MonoBehaviour
 
     public PlayerBattleHUD playerHUD;
     public BossBattleHUD bossHUD;
+    public EndGameScreen endGameScreen;
 
     void Start()
     {

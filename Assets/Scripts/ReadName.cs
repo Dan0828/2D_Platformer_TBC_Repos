@@ -23,7 +23,7 @@ public class ReadName : MonoBehaviour
 
     void CreateFile()
     {
-        path = Application.dataPath + "/Legends.text";
+        path = Application.dataPath + "/PreviousPlayers.text";
 
         //Creates the file if it doesn't exist 
         if (!File.Exists(path))
@@ -35,7 +35,7 @@ public class ReadName : MonoBehaviour
 
     public void AddNames()
     {
-        path = Application.dataPath + "/Legends.text";
+        path = Application.dataPath + "/PreviousPlayers.text";
         lines = File.ReadAllLines(path);
 
         if (lines.Length == 5)

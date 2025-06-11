@@ -51,6 +51,8 @@ public class Player : Unit
             {
                 battleManager.state = BattleState.WIN;
                 battleManager.EndBattle();
+                yield return new WaitForSeconds(1f);
+                battleManager.endGameScreen.Setup(1, currentHealth);
             }
             else
             {
@@ -98,6 +100,8 @@ public class Player : Unit
             {
                 battleManager.state = BattleState.WIN;
                 battleManager.EndBattle();
+                yield return new WaitForSeconds(1f);
+                battleManager.endGameScreen.Setup(1, currentHealth);
             }
             else
             {
@@ -218,6 +222,7 @@ public class Player : Unit
             {
                 battleManager.state = BattleState.WIN;
                 battleManager.EndBattle();
+
             }
             else
             {
