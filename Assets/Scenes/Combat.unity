@@ -591,6 +591,10 @@ MonoBehaviour:
   state: 0
   playerRb: {fileID: 870492812}
   bossRb: {fileID: 1731466441}
+  player: {fileID: 0}
+  boss: {fileID: 0}
+  attacking: 0
+  isDead: 0
   dialogueText: {fileID: 1081585303}
   playerHealthText: {fileID: 1799911328}
   bossHealthText: {fileID: 1918445347}
@@ -1880,8 +1884,8 @@ GameObject:
   m_Component:
   - component: {fileID: 870492811}
   - component: {fileID: 870492810}
-  - component: {fileID: 870492813}
   - component: {fileID: 870492812}
+  - component: {fileID: 870492813}
   m_Layer: 0
   m_Name: Knight
   m_TagString: Untagged
@@ -1986,15 +1990,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 870492809}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9245de3b86636e24f94197960e6161df, type: 3}
+  m_Script: {fileID: 11500000, guid: 4ee8885a662dac241b0b0c0fbeb71e8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   unitName: Player
   maxHealth: 100
   currentHealth: 100
+  battleManager: {fileID: 124302846}
+  healthBar: {fileID: 1462001447}
   maxStamina: 50
   currentStamina: 50
-  healthBar: {fileID: 1462001447}
   staminaBar: {fileID: 1838796226}
 --- !u!1 &926169104
 GameObject:
@@ -3858,8 +3863,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1731466440}
   - component: {fileID: 1731466439}
-  - component: {fileID: 1731466438}
   - component: {fileID: 1731466441}
+  - component: {fileID: 1731466442}
   m_Layer: 0
   m_Name: Boss
   m_TagString: Untagged
@@ -3867,25 +3872,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1731466438
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1731466437}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9245de3b86636e24f94197960e6161df, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  unitName: Fallen Paladin
-  maxHealth: 100
-  currentHealth: 100
-  maxStamina: 0
-  currentStamina: 0
-  healthBar: {fileID: 1657116681}
-  staminaBar: {fileID: 0}
 --- !u!212 &1731466439
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3974,6 +3960,23 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &1731466442
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1731466437}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 589e46d152cc89a47801eed7d674e594, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitName: Fallen Paladin
+  maxHealth: 100
+  currentHealth: 100
+  battleManager: {fileID: 124302846}
+  healthBar: {fileID: 1657116681}
 --- !u!1 &1735597963
 GameObject:
   m_ObjectHideFlags: 0

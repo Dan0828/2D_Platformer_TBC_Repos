@@ -13,14 +13,11 @@ public class BattleManager : MonoBehaviour
     public Rigidbody2D playerRb;
     public Rigidbody2D bossRb;
 
-    Unit player;
-    Unit boss;
-    int playerDamage;
-    int bossAttack;
-    int bossDamage;
-    int staminaUse;
-    bool attacking;
-    bool isDead;
+    [HideInInspector] public Player player;
+
+    [HideInInspector] public Boss boss;
+    [HideInInspector] public bool attacking;
+    [HideInInspector] public bool isDead;
 
     public TextMeshProUGUI dialogueText;
     public TextMeshProUGUI playerHealthText;
@@ -43,8 +40,8 @@ public class BattleManager : MonoBehaviour
     IEnumerator Setup()
     {
 
-        player = playerRb.GetComponent<Unit>();
-        boss = bossRb.GetComponent<Unit>();
+        player = playerRb.GetComponent<Player>();
+        boss = bossRb.GetComponent<Boss>();
 
         staminaText.text = player.currentStamina + "/" + player.maxStamina;
         playerHealthText.text = player.currentHealth + "/" + player.maxHealth;
@@ -66,300 +63,7 @@ public class BattleManager : MonoBehaviour
         PlayerTurn();
     }
 
-    IEnumerator PlayerBaseAttack()
-    {
-        //Damage the enemy
-
-        attacking = true;
-
-        playerDamage = Random.Range(4, 9);
-
-        isDead = boss.TakeDamage(playerDamage);
-
-        if (boss.currentHealth < 0)
-        {
-            bossHealthText.text = 0 + "/" + boss.maxHealth;
-        }
-        else
-        {
-            bossHealthText.text = boss.currentHealth + "/" + boss.maxHealth;
-        }
-
-        dialogueText.text = "Your attack successfully dealt " + playerDamage + " damage.";
-        yield return new WaitForSeconds(2f);
-
-        if (isDead)
-        {
-            state = BattleState.WIN;
-            EndBattle();
-        }
-        else
-        {
-            state = BattleState.ENEMYTURN;
-            StartCoroutine(EnemyTurn());
-        }
-
-    }
-
-    IEnumerator PlayerCrescentSlash()
-    {
-        //Damage the enemy
-
-        staminaUse = 10;
-
-        if (player.currentStamina - staminaUse < 0)
-        {
-            dialogueText.text = "You do not have the energy to perform this attack.";
-            yield return new WaitForSeconds(1f);
-            PlayerTurn();
-            attacking = false;
-            yield break;
-        }
-
-        attacking = true;
-
-        playerDamage = Random.Range(10, 17);
-
-        player.StaminaUsage(staminaUse);
-        staminaText.text = player.currentStamina + "/" + player.maxStamina;
-
-        isDead = boss.TakeDamage(playerDamage);
-
-        if (boss.currentHealth < 0)
-        {
-            bossHealthText.text = 0 + "/" + boss.maxHealth;
-        }
-        else
-        {
-            bossHealthText.text = boss.currentHealth + "/" + boss.maxHealth;
-        }
-
-        dialogueText.text = "Your attack successfully dealt " + playerDamage + " damage.";
-        yield return new WaitForSeconds(2f);
-
-        if (isDead)
-        {
-            state = BattleState.WIN;
-            EndBattle();
-        }
-        else
-        {
-            state = BattleState.ENEMYTURN;
-            StartCoroutine(EnemyTurn());
-        }
-    }
-
-
-    IEnumerator PlayerTwinStrike()
-    {
-        //Damage the enemy
-
-        staminaUse = 20;
-
-        if (player.currentStamina - staminaUse < 0)
-        {
-            dialogueText.text = "You do not have the energy to perform this attack.";
-            yield return new WaitForSeconds(1f);
-            PlayerTurn();
-            attacking = false;
-            yield break;
-        }
-
-        attacking = true;
-
-        playerDamage = Random.Range(6, 17);
-
-        player.StaminaUsage(staminaUse);
-        staminaText.text = player.currentStamina + "/" + player.maxStamina;
-
-        isDead = boss.TakeDamage(playerDamage);
-
-        if (boss.currentHealth < 0)
-        {
-            bossHealthText.text = 0 + "/" + boss.maxHealth;
-        }
-        else
-        {
-            bossHealthText.text = boss.currentHealth + "/" + boss.maxHealth;
-        }
-
-        dialogueText.text = "Hit #1 successfully dealt " + playerDamage + " damage.";
-        yield return new WaitForSeconds(2f);
-
-        if (isDead)
-        {
-            state = BattleState.WIN;
-            EndBattle();
-        }
-        else
-        {
-            playerDamage = Random.Range(6, 17);
-
-            isDead = boss.TakeDamage(playerDamage);
-
-            bossHealthText.text = boss.currentHealth + "/" + boss.maxHealth;
-
-            if (boss.currentHealth < 0)
-            {
-                bossHealthText.text = 0 + "/" + boss.maxHealth;
-            }
-            else
-            {
-                bossHealthText.text = boss.currentHealth + "/" + boss.maxHealth;
-            }
-
-            dialogueText.text = "Hit #2 successfully dealt " + playerDamage + " damage.";
-            yield return new WaitForSeconds(2f);
-
-
-            if (isDead)
-            {
-                state = BattleState.WIN;
-                EndBattle();
-            }
-            else
-            {
-                state = BattleState.ENEMYTURN;
-                StartCoroutine(EnemyTurn());
-            }
-        }
-
-    }
-
-    IEnumerator PlayerShatterfall()
-    {
-        //Damage the enemy
-
-        staminaUse = 30;
-
-        if (player.currentStamina - staminaUse < 0)
-        {
-            dialogueText.text = "You do not have the energy to perform this attack.";
-            yield return new WaitForSeconds(1f);
-            PlayerTurn();
-            attacking = false;
-            yield break;
-        }
-
-        attacking = true;
-
-        playerDamage = Random.Range(22, 31);
-
-        player.StaminaUsage(staminaUse);
-        staminaText.text = player.currentStamina + "/" + player.maxStamina;
-
-        isDead = boss.TakeDamage(playerDamage);
-
-        if (boss.currentHealth < 0)
-        {
-            bossHealthText.text = 0 + "/" + boss.maxHealth;
-        }
-        else
-        {
-            bossHealthText.text = boss.currentHealth + "/" + boss.maxHealth;
-        }
-
-        
-        dialogueText.text = "Your attack successfully dealt " + playerDamage + " damage.";
-        yield return new WaitForSeconds(2f);
-
-        if (isDead)
-        {
-            state = BattleState.WIN;
-            EndBattle();
-        }
-        else
-        {
-            state = BattleState.ENEMYTURN;
-            StartCoroutine(EnemyTurn());
-        }
-
-
-
-
-    }
-
-    IEnumerator EnemyTurn()
-    {
-         bossAttack = Random.Range(1, 101);
-
-         if (bossAttack <= 40)
-         {            
-             bossDamage = Random.Range(6, 11);
-
-             dialogueText.text = boss.unitName + " uses Slash.";
-
-             yield return new WaitForSeconds(2f);
-         }
-          
-         else if (bossAttack > 40 && bossAttack <= 65)
-         {         
-             bossDamage = Random.Range(12, 16);
-
-             dialogueText.text = boss.unitName + " uses Night Daze.";
-
-             yield return new WaitForSeconds(2f);
-         }
-          
-         else if (bossAttack > 65  && bossAttack <= 85 )
-         {  
-             bossDamage = Random.Range(18, 23);
-
-             dialogueText.text = boss.unitName + " uses Black Hole Eclipse.";
-
-             yield return new WaitForSeconds(2f);
-         }
-          
-         else if (bossAttack > 85)
-         {          
-             bossDamage = Random.Range(28, 32);
-
-             dialogueText.text = boss.unitName + " uses Wrath of the Void.";
-
-             yield return new WaitForSeconds(2f);
-
-         }
-
-
-        isDead = player.TakeDamage(bossDamage);
-
-        if (player.currentHealth < 0)
-        {
-            playerHealthText.text = 0 + "/" + player.maxHealth;
-        }
-        else
-        {
-            playerHealthText.text = player.currentHealth + "/" + player.maxHealth;
-        }
-
-        dialogueText.text = "The attack dealt " + bossDamage + " damage.";
-
-        yield return new WaitForSeconds(1f);
-
-        attacking = false;
-        
-
-        if(isDead)
-        {
-            state = BattleState.LOSE;
-            EndBattle();
-
-        }
-        else
-        {
-            state = BattleState.PLAYERTURN;
-            PlayerTurn();
-            if (player.currentStamina < 50)
-            {
-                player.StaminaRefresh();
-                staminaText.text = player.currentStamina + "/" + player.maxStamina;
-            }
-        }
-
-        
-    }
-
-    void EndBattle()
+    public void EndBattle()
     {
         if (state == BattleState.WIN)
         {
@@ -375,7 +79,7 @@ public class BattleManager : MonoBehaviour
     {
         if (state == BattleState.PLAYERTURN && !attacking)
         {
-            StartCoroutine(PlayerBaseAttack());
+            StartCoroutine(player.Attack(1));
         }
 
     }
@@ -384,7 +88,7 @@ public class BattleManager : MonoBehaviour
     {
         if (state == BattleState.PLAYERTURN && !attacking)
         {
-            StartCoroutine(PlayerCrescentSlash());
+            StartCoroutine(player.Attack(2));
         }
     }
 
@@ -392,7 +96,7 @@ public class BattleManager : MonoBehaviour
     {
         if (state == BattleState.PLAYERTURN && !attacking)
         {
-            StartCoroutine(PlayerTwinStrike());
+            StartCoroutine(player.Attack(3));
         }
 
     }
@@ -401,11 +105,11 @@ public class BattleManager : MonoBehaviour
     {
         if (state == BattleState.PLAYERTURN && !attacking)
         {
-            StartCoroutine(PlayerShatterfall());
+            StartCoroutine(player.Attack(4));
         }
         
     }
-    void PlayerTurn()
+    public void PlayerTurn()
     {
         dialogueText.text = "Choose your move...";
     }

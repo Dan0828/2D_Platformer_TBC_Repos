@@ -8,11 +8,10 @@ public class Unit : MonoBehaviour
     public string unitName;
     public int maxHealth;
     public int currentHealth;
-    public int maxStamina;
-    public int currentStamina;
+
+    public BattleManager battleManager;
 
     public HealthBar healthBar;
-    public StaminaBar staminaBar;
 
     public bool TakeDamage(int dmg)
     {
@@ -27,18 +26,6 @@ public class Unit : MonoBehaviour
         {
             return false;
         }
-    }
-
-    public void StaminaUsage(int staminaUse)
-    {
-        currentStamina =currentStamina- staminaUse;
-        staminaBar.SetStamina(currentStamina);
-    }
-
-    public void StaminaRefresh()
-    {
-        currentStamina += 5;
-        staminaBar.SetStamina(currentStamina);
     }
 
 }
