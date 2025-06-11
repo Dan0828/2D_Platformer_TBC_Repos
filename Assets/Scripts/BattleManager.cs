@@ -6,8 +6,6 @@ using TMPro;
 
 public enum BattleState { START, PLAYERTURN, ENEMYTURN, WIN, LOSE }
 
-
-
 public class BattleManager : MonoBehaviour
 {
 
