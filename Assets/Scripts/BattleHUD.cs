@@ -7,10 +7,17 @@ using TMPro;
 public class BattleHUD : MonoBehaviour
 {
     public TextMeshProUGUI nameText;
+    public ReadName readName;
 
-    public void SetHUD(Unit unit)
+    public void SetPlayerHUD(Player player)
     {
-        nameText.text = unit.unitName;
+        Debug.Log(readName);
+        nameText.text = readName.LoadLastName();
+    }
+
+    public void SetBossHUD(Boss boss)
+    {
+        nameText.text = boss.unitName;
     }
 
 }

@@ -10,22 +10,25 @@ public class BattleManager : MonoBehaviour
 {
 
     public BattleState state;
-    public Rigidbody2D playerRb;
-    public Rigidbody2D bossRb;
+    private Rigidbody2D playerRb;
+    private Rigidbody2D bossRb;
 
-    [HideInInspector] public Player player;
+    public Player player;
 
-    [HideInInspector] public Boss boss;
+    public Boss boss;
+
     [HideInInspector] public bool attacking;
     [HideInInspector] public bool isDead;
+    [HideInInspector] public int turnNumber;
 
     public TextMeshProUGUI dialogueText;
     public TextMeshProUGUI playerHealthText;
     public TextMeshProUGUI bossHealthText;
     public TextMeshProUGUI staminaText;
+    public TextMeshProUGUI turnNumberText;
 
-    public PlayerBattleHUD playerHUD;
-    public BossBattleHUD bossHUD;
+    public BattleHUD playerHUD;
+    public BattleHUD bossHUD;
     public EndGameScreen endGameScreen;
 
     void Start()
@@ -40,18 +43,17 @@ public class BattleManager : MonoBehaviour
 
     IEnumerator Setup()
     {
-
-        player = playerRb.GetComponent<Player>();
-        boss = bossRb.GetComponent<Boss>();
+        turnNumber = 1;
 
         staminaText.text = player.currentStamina + "/" + player.maxStamina;
         playerHealthText.text = player.currentHealth + "/" + player.maxHealth;
         bossHealthText.text = boss.currentHealth + "/" + boss.maxHealth;
+        turnNumberText.text = "TURN #1";
 
         dialogueText.text = "You are challenged by the " + boss.unitName + " to a battle.";
 
-        playerHUD.SetHUD(player);
-        bossHUD.SetHUD(boss);
+        playerHUD.SetPlayerHUD(player);
+        bossHUD.SetBossHUD(boss);
 
         /*Waits for 2 seconds before changing the state of the game, and changing the dialogue text.*/
         yield return new WaitForSeconds(2f);
@@ -61,6 +63,7 @@ public class BattleManager : MonoBehaviour
         yield return new WaitForSeconds(2f);
 
         state = BattleState.PLAYERTURN;
+        turnNumberText.text = "TURN #" + turnNumber;
         PlayerTurn();
     }
 

@@ -71,11 +71,16 @@ public class Boss : Unit
         {
             battleManager.state = BattleState.LOSE;
             battleManager.EndBattle();
+            yield return new WaitForSeconds(2f);
+            StartCoroutine(battleManager.endGameScreen.Setup(2, 0, 0, 0));
 
         }
         else
         {
             battleManager.state = BattleState.PLAYERTURN;
+            battleManager.turnNumber += 1;
+            battleManager.turnNumberText.text = "TURN #" + battleManager.turnNumber;
+
             battleManager.PlayerTurn();
             if (battleManager.player.currentStamina < 50)
             {

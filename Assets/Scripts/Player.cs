@@ -7,6 +7,8 @@ public class Player : Unit
     public int maxStamina;
     public int currentStamina;
     int staminaUse;
+    ArrayList allDamage = new ArrayList();
+    int highestDamage;
 
     int playerDamage;
 
@@ -25,6 +27,7 @@ public class Player : Unit
 
     public IEnumerator Attack(int move)
     {
+
         if (move == 1)
         {
             //Damage the enemy
@@ -32,6 +35,7 @@ public class Player : Unit
             battleManager.attacking = true;
 
             playerDamage = Random.Range(4, 9);
+            allDamage.Add(playerDamage);
 
             battleManager.isDead = battleManager.boss.TakeDamage(playerDamage);
 
@@ -52,7 +56,8 @@ public class Player : Unit
                 battleManager.state = BattleState.WIN;
                 battleManager.EndBattle();
                 yield return new WaitForSeconds(1f);
-                battleManager.endGameScreen.Setup(1, currentHealth);
+                highestDamage = findHighestDamage();
+                StartCoroutine(battleManager.endGameScreen.Setup(1, currentHealth, highestDamage, battleManager.turnNumber));
             }
             else
             {
@@ -78,6 +83,7 @@ public class Player : Unit
             battleManager.attacking = true;
 
             playerDamage = Random.Range(10, 17);
+            allDamage.Add(playerDamage);
 
             StaminaUsage(staminaUse);
             battleManager.staminaText.text = currentStamina + "/" + maxStamina;
@@ -101,7 +107,10 @@ public class Player : Unit
                 battleManager.state = BattleState.WIN;
                 battleManager.EndBattle();
                 yield return new WaitForSeconds(1f);
-                battleManager.endGameScreen.Setup(1, currentHealth);
+
+                highestDamage = findHighestDamage();
+
+                StartCoroutine(battleManager.endGameScreen.Setup(1, currentHealth, highestDamage, battleManager.turnNumber));
             }
             else
             {
@@ -126,6 +135,7 @@ public class Player : Unit
             battleManager.attacking = true;
 
             playerDamage = Random.Range(6, 17);
+            allDamage.Add(playerDamage);
 
             StaminaUsage(staminaUse);
             battleManager.staminaText.text = currentStamina + "/" + maxStamina;
@@ -148,10 +158,14 @@ public class Player : Unit
             {
                 battleManager.state = BattleState.WIN;
                 battleManager.EndBattle();
+                yield return new WaitForSeconds(1f);
+                highestDamage = findHighestDamage();
+                StartCoroutine(battleManager.endGameScreen.Setup(1, currentHealth, highestDamage, battleManager.turnNumber));
             }
             else
             {
                 playerDamage = Random.Range(6, 17);
+                allDamage.Add(playerDamage);
 
                 battleManager.isDead = battleManager.boss.TakeDamage(playerDamage);
 
@@ -174,6 +188,9 @@ public class Player : Unit
                 {
                     battleManager.state = BattleState.WIN;
                     battleManager.EndBattle();
+                    yield return new WaitForSeconds(1f);
+                    highestDamage = findHighestDamage();
+                    StartCoroutine(battleManager.endGameScreen.Setup(1, currentHealth, highestDamage, battleManager.turnNumber));
                 }
                 else
                 {
@@ -198,7 +215,8 @@ public class Player : Unit
 
             battleManager.attacking = true;
 
-            playerDamage = Random.Range(22, 31);
+            playerDamage = Random.Range(28, 35);
+            allDamage.Add(playerDamage);
 
             StaminaUsage(staminaUse);
             battleManager.staminaText.text = currentStamina + "/" + maxStamina;
@@ -222,6 +240,9 @@ public class Player : Unit
             {
                 battleManager.state = BattleState.WIN;
                 battleManager.EndBattle();
+                yield return new WaitForSeconds(1f);
+                highestDamage = findHighestDamage();
+                StartCoroutine(battleManager.endGameScreen.Setup(1, currentHealth, highestDamage, battleManager.turnNumber));
 
             }
             else
@@ -231,5 +252,29 @@ public class Player : Unit
             }
 
         }
+
+    }
+
+    public int findHighestDamage()
+    {
+
+        for (int i = 1; i < allDamage.Count; i++)
+        {
+
+            int current = (int)allDamage[i];
+            int j = i - 1;
+
+            while (j >= 0 && (int)allDamage[j] > current)
+            {
+                // Swap if the element at j - 1 position is greater than the element at j position
+                allDamage[j + 1] = allDamage[j];
+                j--;
+            }
+
+            allDamage[j + 1] = current;
+        }
+
+        highestDamage = (int)allDamage[allDamage.Count - 1];
+        return highestDamage;
     }
 }

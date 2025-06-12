@@ -5,7 +5,7 @@ using System.IO;
 
 public class ReadName : MonoBehaviour
 {
-    private string input;
+    private string name;
 
     // Path of the file
     private string path;
@@ -18,7 +18,7 @@ public class ReadName : MonoBehaviour
 
     public void ReadNameInput(string n)
     {
-        input = n;   
+        name = n;
     }
 
     void CreateFile()
@@ -49,6 +49,21 @@ public class ReadName : MonoBehaviour
         } 
 
         //Adds the name that the player enters to the file.
-        File.AppendAllText(path, input + "\n");
+        File.AppendAllText(path, name + "\n");
     }
+
+    public string LoadLastName()
+    {
+        path = Application.dataPath + "/PreviousPlayers.text";
+
+        lines = File.ReadAllLines(path);
+        if (lines.Length == 0)
+        {
+            return null;
+        }
+
+        return lines[lines.Length - 1];
+
+    }
+
 }
