@@ -1039,7 +1039,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 
+  m_text: SWORDSWORN
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8c9c5cec786f7524d95bb13b2f576d03, type: 2}
   m_sharedMaterial: {fileID: 4160115647708746079, guid: 8c9c5cec786f7524d95bb13b2f576d03, type: 2}
@@ -1953,7 +1953,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "- Press A to move left\n- Press D to move Right\n- Press Space to Jump\n\n\t\t
     Game Rules:\nTraverse through the platforming area and avoid the spikes to advance
-    to the next stage and fight the boss in turn based combat."
+    to the next stage and fight the boss in turn based combat.\n\n- 5 Stamina is
+    generated per turn in the combat."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8c9c5cec786f7524d95bb13b2f576d03, type: 2}
   m_sharedMaterial: {fileID: 4160115647708746079, guid: 8c9c5cec786f7524d95bb13b2f576d03, type: 2}
