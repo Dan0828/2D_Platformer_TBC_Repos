@@ -11,7 +11,7 @@ public class Boss : Unit
     {
         bossAttack = Random.Range(1, 101);
 
-        if (bossAttack <= 40)
+        if (bossAttack <= 50)
         {
             bossDamage = Random.Range(6, 11);
 
@@ -20,7 +20,7 @@ public class Boss : Unit
             yield return new WaitForSeconds(2f);
         }
 
-        else if (bossAttack > 40 && bossAttack <= 65)
+        else if (bossAttack > 50 && bossAttack <= 75)
         {
             bossDamage = Random.Range(12, 16);
 
@@ -29,7 +29,7 @@ public class Boss : Unit
             yield return new WaitForSeconds(2f);
         }
 
-        else if (bossAttack > 65 && bossAttack <= 85)
+        else if (bossAttack > 75 && bossAttack <= 90)
         {
             bossDamage = Random.Range(18, 23);
 
@@ -38,7 +38,7 @@ public class Boss : Unit
             yield return new WaitForSeconds(2f);
         }
 
-        else if (bossAttack > 85)
+        else if (bossAttack > 90)
         {
             bossDamage = Random.Range(28, 32);
 
