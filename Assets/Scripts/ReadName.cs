@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 
+// Reads the name the user enters at the start of the game and inputs it into a file.
 public class ReadName : MonoBehaviour
 {
     private string name;
@@ -33,6 +34,11 @@ public class ReadName : MonoBehaviour
         
     }
 
+    /* Called to add the name the player enters to the file. If the file length is 5 meaning if there are 5 names before the new name is added,
+     * the name at the first index is removed since that name is the oldest of the 5. It is removed by saving all the lines in the file to an array 
+     * then fully clearing the file. Once cleared, the items in the array are reprinted into the file starting at the second index. This removes the name
+     * at the first index allowing the new one to be entered. */
+
     public void AddNames()
     {
         path = Application.dataPath + "/PreviousPlayers.text";
@@ -52,6 +58,7 @@ public class ReadName : MonoBehaviour
         File.AppendAllText(path, name + "\n");
     }
 
+    // Used to display the name of the current player in the combat scene. The name in the last index will be the name of the current player.
     public string LoadLastName()
     {
         path = Application.dataPath + "/PreviousPlayers.text";

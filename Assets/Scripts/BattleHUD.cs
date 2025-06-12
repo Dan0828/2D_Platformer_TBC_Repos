@@ -10,8 +10,7 @@ public class BattleHUD : MonoBehaviour
     public ReadName readName;
 
     public void SetPlayerHUD(Player player)
-    {
-        Debug.Log(readName);
+    {;
         nameText.text = readName.LoadLastName();
     }
 
