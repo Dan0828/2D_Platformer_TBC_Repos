@@ -62,7 +62,7 @@ public class Player : Unit
             battleManager.state = BattleState.WIN;
             battleManager.EndBattle();
             yield return new WaitForSeconds(1f);
-            highestDamage = findHighestDamage();
+            highestDamage = FindHighestDamage();
             StartCoroutine(battleManager.endGameScreen.Setup(1, GetCurrentHealth(), highestDamage, battleManager.turnNumber));
         }
         else
@@ -119,7 +119,7 @@ public class Player : Unit
                 battleManager.EndBattle();
                 yield return new WaitForSeconds(1f);
 
-                highestDamage = findHighestDamage();
+                highestDamage = FindHighestDamage();
 
                 StartCoroutine(battleManager.endGameScreen.Setup(1, GetCurrentHealth(), highestDamage, battleManager.turnNumber));
             }
@@ -170,7 +170,7 @@ public class Player : Unit
                 battleManager.state = BattleState.WIN;
                 battleManager.EndBattle();
                 yield return new WaitForSeconds(1f);
-                highestDamage = findHighestDamage();
+                highestDamage = FindHighestDamage();
                 StartCoroutine(battleManager.endGameScreen.Setup(1, GetCurrentHealth(), highestDamage, battleManager.turnNumber));
             }
             else
@@ -200,7 +200,7 @@ public class Player : Unit
                     battleManager.state = BattleState.WIN;
                     battleManager.EndBattle();
                     yield return new WaitForSeconds(1f);
-                    highestDamage = findHighestDamage();
+                    highestDamage = FindHighestDamage();
                     StartCoroutine(battleManager.endGameScreen.Setup(1, GetCurrentHealth(), highestDamage, battleManager.turnNumber));
                 }
                 else
@@ -252,7 +252,7 @@ public class Player : Unit
                 battleManager.state = BattleState.WIN;
                 battleManager.EndBattle();
                 yield return new WaitForSeconds(1f);
-                highestDamage = findHighestDamage();
+                highestDamage = FindHighestDamage();
                 StartCoroutine(battleManager.endGameScreen.Setup(1, GetCurrentHealth(), highestDamage, battleManager.turnNumber));
 
             }
@@ -268,7 +268,7 @@ public class Player : Unit
 
     /* This method is used to sort the allDamage array list using insertion sort to find the highest value. Once sorted the last value in the array is taken
        and set to a variable. That variable is returned, and used to display the highest amount of damage the player dealt by the end of the game if they win. */
-    public int findHighestDamage()
+    public int FindHighestDamage()
     {
 
         for (int i = 1; i < allDamage.Count; i++)

@@ -110295,6 +110295,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 8
   jumpForce: 1200
+  animator: {fileID: 0}
 --- !u!61 &1893279485
 BoxCollider2D:
   m_ObjectHideFlags: 0

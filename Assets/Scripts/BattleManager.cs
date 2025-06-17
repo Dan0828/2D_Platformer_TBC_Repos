@@ -12,8 +12,6 @@ public class BattleManager : MonoBehaviour
 {
 
     public BattleState state;
-    private Rigidbody2D playerRb;
-    private Rigidbody2D bossRb;
 
     public Player player;
 

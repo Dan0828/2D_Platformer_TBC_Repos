@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
     //Top of UML
@@ -9,6 +10,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float jumpForce;
     private Vector2 moveDirection;
     private bool isGrounded;
+    private bool isMoving;
+    [SerializeField] private Animator animator;
+    private float countdown;
 
     //below is all methods
 
@@ -16,6 +20,7 @@ public class PlayerMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         moveDirection = Vector2.zero;
+        animator = GetComponent<Animator>();
     }
 
     private void Update()
@@ -48,9 +53,10 @@ public class PlayerMovement : MonoBehaviour
     {    
         moveDirection.x = Input.GetAxisRaw("Horizontal");
         rb.velocity = new Vector2(moveDirection.x * speed, rb.velocity.y);
+        animator.SetFloat("XVelocity", Math.Abs(rb.velocity.x));
 
         // Flip Sprite
-        if(moveDirection.x > 0 && transform.localScale.x < 0 || moveDirection.x < 0 && transform.localScale.x > 0)
+        if (moveDirection.x > 0 && transform.localScale.x < 0 || moveDirection.x < 0 && transform.localScale.x > 0)
         {
             transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
         }      
